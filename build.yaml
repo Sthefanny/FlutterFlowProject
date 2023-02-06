@@ -1,0 +1,19 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # Options configure how source code is generated for every
+          # `@JsonSerializable`-annotated class in the package.
+          #
+          # The default value for each is listed.
+          explicit_to_json: true
+          field_rename: snake
+
+      mobx_codegen|mobx_generator:
+        generate_for:
+          - "lib/*/**_store.dart"
+          - "lib/app/common/repositories/*/**_repository.dart"
+          - "lib/app/common/services/*/**_service.dart"
+          - "lib/app/common/models/*/**_model.dart"
+          - "lib/app/common/enums/*/**_enum.dart"

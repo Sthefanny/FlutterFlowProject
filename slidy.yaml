@@ -1,0 +1,63 @@
+slidy: "1"
+variables:
+  customMessage: "Complete" # Gets  ${Local.var.customMessage}
+
+scripts:
+  # Steped command (slidy run build)
+  build:
+    name: "Build"
+    description: "Execute build_runner"
+    steps:
+      - name: "Clean"
+        run: fvm flutter clean
+
+      - name: "PubGet"
+        run: fvm flutter pub get
+
+      - name: "RunBuild"
+        run: fvm flutter pub run build_runner build --delete-conflicting-outputs
+
+  # Steped command (slidy run build)
+  watch:
+    name: "Watch"
+    description: "Execute build_runner"
+    steps:
+      - name: "Clean"
+        run: fvm flutter clean
+
+      - name: "PubGet"
+        run: fvm flutter pub get
+
+      - name: "RunBuild"
+        run: fvm flutter pub run build_runner watch --delete-conflicting-outputs
+
+  # Steped command (slidy run cleanup)
+  cleanup:
+    description: "cleanup project"
+    steps:
+      - name: "Clean"
+        run: fvm flutter clean
+
+      - name: "GetPackages"
+        description: "Get packages"
+        run: fvm flutter pub get
+
+      - name: "PodClean"
+        description: "Execute pod clean"
+        shell: bash # default: command. options (command|bash|sh|zsh|pwsh)
+        condition: "${System.operatingSystem} == macos"
+        working-directory: ios
+        run: |-
+          rm Podfile.lock
+          pod deintegrate
+          pod update
+          pod install
+
+      - run: echo ${Local.var.customMessage}
+
+  # Steped command (slidy run test)
+  test:
+    description: "test project"
+    steps:
+      - name: "Test with coverage"
+        run: fvm flutter test --coverage
