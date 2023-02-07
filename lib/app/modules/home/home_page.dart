@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
 import 'home_store.dart';
+import 'widgets/basic_info_widget.dart';
+import 'widgets/dependents_widget.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -12,8 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   late final HomeStore store;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -25,16 +27,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Counter'),
+        title: Text('Form'),
       ),
-      body: Observer(
-        builder: (context) => Text('${store.counter}'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          store.increment();
-        },
-        child: Icon(Icons.add),
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            BasicInfoWidget(),
+            DependentsWidget(),
+          ],
+        ),
       ),
     );
   }
