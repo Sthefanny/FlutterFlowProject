@@ -7,5 +7,6 @@ class AppColor {
   static const Color darkSlateBlue = Color(0xFF264C71);
   static const Color slate = Color(0xFF3E5061);
   static const Color blueGrey = Color(0xFF547C86);
+  static const Color lightGrey = Color(0xFF999999);
   static const Color darkPeach = Color(0xFFE97C58);
 }

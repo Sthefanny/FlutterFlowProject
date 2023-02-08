@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'home_store.dart';
 import 'widgets/basic_info_widget.dart';
+import 'widgets/camera_widget.dart';
 import 'widgets/dependents_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,11 +32,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Form(
         key: _formKey,
-        child: ListView(
-          children: [
-            BasicInfoWidget(),
-            DependentsWidget(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          child: ListView(
+            children: [
+              BasicInfoWidget(),
+              DependentsWidget(),
+              CameraWidget(),
+            ],
+          ),
         ),
       ),
     );

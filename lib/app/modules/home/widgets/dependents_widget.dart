@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutterflow_project/app/modules/models/dependent_model.dart';
 
 import '../../../common/styles/text_styles.dart';
@@ -18,7 +17,7 @@ class _DependentsWidgetState extends State<DependentsWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
           Padding(
@@ -37,34 +36,32 @@ class _DependentsWidgetState extends State<DependentsWidget> {
               ],
             ),
           ),
-          Observer(
-            builder: (_) => ListView.builder(
-              shrinkWrap: true,
-              itemCount: dependentList.length,
-              itemBuilder: (context, index) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: TextInput(
-                        margin: const EdgeInsets.all(0),
-                        controller: dependentList[index].controller,
-                        hintText: 'Dependent Name',
-                      ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: dependentList.length,
+            itemBuilder: (context, index) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: TextInput(
+                      margin: const EdgeInsets.all(0),
+                      controller: dependentList[index].controller,
+                      hintText: 'Dependent Name',
                     ),
-                    IconButton(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      onPressed: () {
-                        setState(() {
-                          dependentList.removeAt(index);
-                        });
-                      },
-                      icon: Icon(Icons.remove),
-                    ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    onPressed: () {
+                      setState(() {
+                        dependentList.removeAt(index);
+                      });
+                    },
+                    icon: Icon(Icons.remove),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),

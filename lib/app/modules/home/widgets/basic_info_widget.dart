@@ -9,25 +9,22 @@ class BasicInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Text('Basic Information', style: TextStyles.Heading),
-          ),
-          Text('Name:', style: TextStyles.Subheading),
-          TextInput(hintText: 'Your Name'),
-          Text('Age:', style: TextStyles.Subheading),
-          TextInput(hintText: 'XX'),
-          Text('Gender:', style: TextStyles.Subheading),
-          GenderInput(
-            onChanged: (UserGender? value) {},
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Text('Basic Information', style: TextStyles.Heading),
+        ),
+        Text('Name:', style: TextStyles.Subheading),
+        TextInput(hintText: 'Your Name'),
+        Text('Age:', style: TextStyles.Subheading),
+        TextInput(hintText: 'XX'),
+        Text('Gender:', style: TextStyles.Subheading),
+        GenderInput(
+          onChanged: (UserGender? value) {},
+        ),
+      ],
     );
   }
 }
