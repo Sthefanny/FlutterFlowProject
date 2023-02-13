@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterflow_project/app/modules/models/dependent_model.dart';
+import 'package:flutterflow_project/app/modules/home/models/dependent_model.dart';
 
 import '../../../common/styles/text_styles.dart';
 import '../../../common/widgets/fields.dart';
@@ -37,6 +37,7 @@ class _DependentsWidgetState extends State<DependentsWidget> {
             ),
           ),
           ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: dependentList.length,
             itemBuilder: (context, index) {

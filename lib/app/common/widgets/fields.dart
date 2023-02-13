@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutterflow_project/app/common/extensions/string_extension.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../enums/user_gender_enum.dart';
@@ -8,6 +10,7 @@ class TextInput extends Container {
   TextInput({
     required String hintText,
     String? helperText = '',
+    String? errorText,
     TextEditingController? controller,
     TextInputAction? textInputAction,
     TextInputType keyboardType = TextInputType.text,
@@ -22,6 +25,7 @@ class TextInput extends Container {
     int? maxLines,
     bool autofocus = false,
     EdgeInsets? margin,
+    List<TextInputFormatter>? inputFormatters,
   }) : super(
           margin: margin ?? EdgeInsets.only(top: 16, bottom: 8),
           child: TextFormField(
@@ -35,9 +39,11 @@ class TextInput extends Container {
             style: _textStyle(fontSize: 16, color: AppColor.slate, height: .9),
             cursorColor: AppColor.midBlue,
             cursorWidth: 1,
+            inputFormatters: inputFormatters,
             decoration: InputDecoration(
               alignLabelWithHint: true,
               suffixIcon: suffixIcon,
+              errorText: errorText,
               labelStyle: _textStyle(fontSize: 16, color: AppColor.slate),
               hintText: hintText,
               hintStyle: _textStyle(color: AppColor.slate),
@@ -87,9 +93,11 @@ class TextInput extends Container {
 
 class GenderInput extends StatefulWidget {
   final Function(UserGender? value) onChanged;
+  final String? errorText;
 
   GenderInput({
     required this.onChanged,
+    this.errorText,
   });
 
   @override
@@ -106,48 +114,56 @@ class GenderInputState extends State<GenderInput> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(height: 16),
-            Listener(
-              onPointerDown: (_) => FocusScope.of(context).unfocus(),
-              child: Container(
-                padding: EdgeInsets.only(top: 2, left: 11, right: 7, bottom: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: AppColor.slate.withOpacity(.5),
-                    width: 1,
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Listener(
+                onPointerDown: (_) => FocusScope.of(context).unfocus(),
+                child: Container(
+                  padding: EdgeInsets.only(top: 2, left: 11, right: 7, bottom: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: !widget.errorText.isNullOrEmpty ? AppColor.darkPeach : AppColor.slate.withOpacity(.5),
+                      width: !widget.errorText.isNullOrEmpty ? 2 : 1,
+                    ),
                   ),
-                ),
-                child: DropdownButton<UserGender>(
-                  style: GoogleFonts.roboto(
-                    fontSize: 12,
-                    color: AppColor.slate,
-                  ),
-                  hint: Text('Select your gender'),
-                  isExpanded: true,
-                  value: _value,
-                  onChanged: (UserGender? value) {
-                    setState(() => _value = value);
-                    widget.onChanged(value);
-                  },
-                  items: <UserGender>[
-                    UserGender.female,
-                    UserGender.male,
-                    UserGender.preferNotToSay,
-                  ].map<DropdownMenuItem<UserGender>>(
-                    (UserGender value) {
-                      String? text;
-                      text = value.getString;
-                      return DropdownMenuItem<UserGender>(
-                        value: value,
-                        child: Text(text),
-                      );
+                  child: DropdownButton<UserGender>(
+                    style: GoogleFonts.roboto(
+                      fontSize: 12,
+                      color: AppColor.slate,
+                    ),
+                    hint: Text('Select your gender'),
+                    isExpanded: true,
+                    value: _value,
+                    onChanged: (UserGender? value) {
+                      setState(() => _value = value);
+                      widget.onChanged(value);
                     },
-                  ).toList(),
-                  underline: Container(),
+                    items: <UserGender>[
+                      UserGender.female,
+                      UserGender.male,
+                      UserGender.preferNotToSay,
+                    ].map<DropdownMenuItem<UserGender>>(
+                      (UserGender value) {
+                        String? text;
+                        text = value.getString;
+                        return DropdownMenuItem<UserGender>(
+                          value: value,
+                          child: Text(text),
+                        );
+                      },
+                    ).toList(),
+                    underline: Container(),
+                  ),
                 ),
               ),
             ),
+            !widget.errorText.isNullOrEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 5, left: 10),
+                    child: Text(widget.errorText!, style: GoogleFonts.roboto(fontSize: 12, color: AppColor.darkPeach)),
+                  )
+                : Container(),
           ],
         ),
       ],
