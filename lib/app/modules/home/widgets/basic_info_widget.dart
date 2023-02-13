@@ -9,10 +9,7 @@ import '../home_store.dart';
 
 class BasicInfoWidget extends StatelessWidget {
   final HomeStore store;
-  BasicInfoWidget({super.key, required this.store});
-  final nameController = TextEditingController();
-  final ageController = TextEditingController();
-  final genderController = TextEditingController();
+  const BasicInfoWidget({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +25,7 @@ class BasicInfoWidget extends StatelessWidget {
           TextInput(
             hintText: 'Your Name',
             errorText: store.error.name,
-            onChanged: (value) {
-              nameController.text = value;
-              return store.name = value;
-            },
-            controller: nameController,
+            onChanged: (value) => store.name = value,
           ),
           Text('Age:', style: TextStyles.Subheading),
           TextInput(
@@ -42,11 +35,7 @@ class BasicInfoWidget extends StatelessWidget {
               services.FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
             keyboardType: services.TextInputType.number,
-            onChanged: (value) {
-              ageController.text = value;
-              return store.age = value;
-            },
-            controller: ageController,
+            onChanged: (value) => store.age = value,
           ),
           Text('Gender:', style: TextStyles.Subheading),
           GenderInput(
