@@ -1,6 +1,3 @@
-lib/main.dart
-lib/env.dart
-
 *.g.dart
 coverage
 
